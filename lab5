@@ -1,0 +1,46 @@
+% Facts
+student(ram).
+student(sita).
+student(mohan).
+
+course(math).
+course(physics).
+course(english).
+
+enrolled(ram, math).
+enrolled(ram, physics).
+enrolled(sita, english).
+enrolled(mohan, math).
+
+teacher(amit, math).
+teacher(raj, physics).
+teacher(neha, english).
+
+% Rules
+teaches(T, S) :- teacher(T, C), enrolled(S, C).
+
+same_course(S1, S2) :-
+    enrolled(S1, C), enrolled(S2, C), S1 \= S2.
+
+studies_two_courses(S) :-
+    enrolled(S, C1), enrolled(S, C2), C1 \= C2.
+
+not_enrolled(S, C) :-
+    student(S), course(C), \+ enrolled(S, C).
+
+
+?- teaches(amit, X).
+X = ram ;
+X = mohan.
+
+?- same_course(ram, X).
+X = mohan.
+
+?- studies_two_courses(ram).
+true.
+
+?- not_enrolled(sita, math).
+true.
+
+?- teacher(T, english).
+T = neha.
